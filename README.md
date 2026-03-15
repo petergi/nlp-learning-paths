@@ -18,7 +18,7 @@ The concepts and techniques covered here are drawn from various NLP textbooks an
 
 ## Getting Started
 
-**Prerequisites:** Python 3.10 or later. Verify with:
+**Prerequisites:** Python 3.10 – 3.13 (3.14 is not yet supported by spaCy). Verify with:
 
 ```bash
 python3 --version
