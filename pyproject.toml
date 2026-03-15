@@ -10,7 +10,12 @@ dependencies = [
   "scikit-learn>=1.5",
   "pandas>=2.2",
   "matplotlib>=3.9",
-  "jupyter>=1.1"
+  "jupyter>=1.1",
+  "textblob>=0.18",
+  "gensim>=4.3",
+  "transformers>=4.40",
+  "torch>=2.2",
+  "sentencepiece>=0.2",
 ]
 
 [project.optional-dependencies]

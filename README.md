@@ -1,20 +1,17 @@
 # NLP with Python Learning Workspace
 
-A practical, beginner-friendly workspace to learn Natural Language Processing (NLP) in Python by building small, focused scripts.
-
-## What You Will Learn
-
-1. Text normalization and tokenization
-2. Stopword removal and lightweight preprocessing
-3. Sentiment analysis with bag-of-words features
-4. Basic text classification with scikit-learn
+A practical workspace to learn Natural Language Processing (NLP) in Python, with two complementary learning tracks: hands-on scripts for quick experimentation, and deep-dive Jupyter notebooks with full explanations and exercises.
 
 ## Project Structure
 
-- `src/nlp_learning/`: reusable NLP utility code
-- `scripts/`: step-by-step runnable examples
-- `data/`: sample datasets for exercises
-- `tests/`: basic tests to validate preprocessing logic
+```text
+├── scripts/              # Track 1: runnable scripts (one per chapter)
+├── notebooks/            # Track 2: deep-dive Jupyter notebooks
+├── src/nlp_learning/     # shared NLP utility modules
+├── tests/                # unit tests for utility modules
+├── data/                 # sample datasets
+└── pyproject.toml
+```
 
 ## Quick Start
 
@@ -31,18 +28,11 @@ source .venv/bin/activate
 pip install -e .[dev]
 ```
 
-1. Download required NLTK resources (one-time):
+1. Download required NLTK resources and spaCy model:
 
 ```bash
-python -m nltk.downloader punkt stopwords
-```
-
-1. Run scripts in order:
-
-```bash
-python scripts/01_text_preprocessing.py
-python scripts/02_sentiment_analysis.py
-python scripts/03_text_classification.py
+python -m nltk.downloader punkt punkt_tab stopwords wordnet vader_lexicon omw-1.4
+python -m spacy download en_core_web_sm
 ```
 
 1. Run tests:
@@ -51,40 +41,39 @@ python scripts/03_text_classification.py
 pytest
 ```
 
-## Study Roadmap
+## Track 1: Scripts
 
-1. **Week 1**: text cleanup, tokenization, stopwords, vocabulary basics
-2. **Week 2**: bag-of-words and TF-IDF features
-3. **Week 3**: supervised models for text classification
-4. **Week 4**: extend with spaCy pipelines (NER, POS tagging)
+Concise, runnable Python scripts — one per chapter. Great for quick experimentation from the command line.
 
-## Interactive Notebook Track
+```bash
+python scripts/01_text_preprocessing.py
+python scripts/02_text_cleaning.py
+# ... through 10_chatbot.py
+```
 
-Open Jupyter from the project root:
+| # | Script | Topics |
+| --- | ------ | ------ |
+| 01 | `01_text_preprocessing.py` | Tokenization, stopword removal, text cleaning |
+| 02 | `02_text_cleaning.py` | Stemming, lemmatization, regex patterns |
+| 03 | `03_feature_engineering.py` | Bag-of-Words, TF-IDF, top terms |
+| 04 | `04_language_modeling.py` | Bigram model, probabilities, text generation |
+| 05 | `05_syntax_parsing.py` | POS tagging, NER, dependency parsing (spaCy) |
+| 06 | `06_sentiment_analysis.py` | VADER, TextBlob, sklearn classifier comparison |
+| 07 | `07_topic_modeling.py` | LSA (sklearn), LDA (gensim) |
+| 08 | `08_text_summarization.py` | Extractive summarization with NLTK |
+| 09 | `09_machine_translation.py` | English-to-French with Hugging Face Transformers |
+| 10 | `10_chatbot.py` | Retrieval-based chatbot with TF-IDF matching |
+
+## Track 2: Notebooks
+
+Full chapter-by-chapter Jupyter notebooks with explanations, code, and exercises with solutions.
 
 ```bash
 jupyter notebook
 ```
 
-Then run these notebooks in order:
-
-1. `notebooks/01_week1_text_basics.ipynb`
-2. `notebooks/02_week2_features_tfidf.ipynb`
-3. `notebooks/03_week3_classification.ipynb`
-4. `notebooks/04_week4_spacy_intro.ipynb`
-
-spaCy model note for Week 4:
-
-```bash
-python -m spacy download en_core_web_sm
-```
-
-## NLP with Python Book — Notebook Track
-
-Full chapter-by-chapter notebooks based on the NLP with Python textbook. Each includes runnable code, explanations, and exercises with solutions.
-
 | # | Notebook | Cells | Key Topics |
-| --- | ---------- | ------- | ------------ |
+| --- | -------- | ----- | ---------- |
 | 01 | [Introduction to NLP](notebooks/01_Introduction_to_NLP.ipynb) | 46 | Tokenization, NLP pipelines, NLTK/spaCy/TextBlob |
 | 02 | [Basic Text Processing](notebooks/02_Basic_Text_Processing.ipynb) | 64 | Stop words, stemming, lemmatization, regex, tokenization |
 | 03 | [Feature Engineering](notebooks/03_Feature_Engineering_for_NLP.ipynb) | 64 | BoW, TF-IDF, Word2Vec, GloVe, BERT embeddings |
@@ -99,8 +88,11 @@ Full chapter-by-chapter notebooks based on the NLP with Python textbook. Each in
 | 12 | [News Aggregator Project](notebooks/12_News_Aggregator_Project.ipynb) | 56 | News collection, summarization, topic modeling, Flask UI |
 | 13 | [Sentiment Dashboard Project](notebooks/13_Sentiment_Analysis_Dashboard_Project.ipynb) | 58 | SMOTE, LogReg/LSTM, Flask+Plotly dashboard, Heroku |
 
-## Next Exercises
+## Shared Utilities (`src/nlp_learning/`)
 
-- Replace CountVectorizer with TF-IDF in `03_text_classification.py`
-- Add your own dataset to `data/`
-- Compare Logistic Regression vs Naive Bayes for classification
+Reusable functions used by both scripts and notebooks:
+
+- **preprocessing** — `clean_text`, `tokenize`, `remove_stopwords`
+- **text_cleaning** — `stem_words`, `lemmatize_words`, `extract_patterns`
+- **features** — `build_bow_matrix`, `build_tfidf_matrix`
+- **similarity** — `find_best_match` (TF-IDF + cosine similarity)
