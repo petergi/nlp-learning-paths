@@ -29,6 +29,10 @@ def lemmatize_words(words: List[str]) -> List[str]:
     """Lemmatize words using the WordNet lemmatizer.
 
     Falls back to returning the words unchanged if NLTK is unavailable.
+
+    Raises:
+        LookupError: If NLTK is installed but the WordNet corpus data is
+            missing.  The error message includes download instructions.
     """
     if WordNetLemmatizer is None:
         return list(words)

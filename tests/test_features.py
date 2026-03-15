@@ -1,3 +1,5 @@
+import pytest
+
 from nlp_learning.features import build_bow_matrix, build_tfidf_matrix
 
 
@@ -25,3 +27,40 @@ def test_tfidf_values_are_normalized() -> None:
     for i in range(matrix.shape[0]):
         row_norm = np.sqrt(matrix[i].multiply(matrix[i]).sum())
         assert abs(row_norm - 1.0) < 1e-6
+
+
+# --- BoW error-condition tests ---
+
+
+def test_bow_raises_on_empty_corpus() -> None:
+    with pytest.raises(ValueError, match="at least one non-empty document"):
+        build_bow_matrix([])
+
+
+def test_bow_raises_on_whitespace_only_corpus() -> None:
+    with pytest.raises(ValueError, match="at least one non-empty document"):
+        build_bow_matrix(["", "   ", "\t"])
+
+
+def test_bow_raises_on_empty_vocabulary() -> None:
+    # Single-character tokens are stripped by CountVectorizer's default token pattern.
+    with pytest.raises(ValueError, match="empty vocabulary"):
+        build_bow_matrix(["a", "b", "c"])
+
+
+# --- TF-IDF error-condition tests ---
+
+
+def test_tfidf_raises_on_empty_corpus() -> None:
+    with pytest.raises(ValueError, match="at least one non-empty document"):
+        build_tfidf_matrix([])
+
+
+def test_tfidf_raises_on_whitespace_only_corpus() -> None:
+    with pytest.raises(ValueError, match="at least one non-empty document"):
+        build_tfidf_matrix(["", "   "])
+
+
+def test_tfidf_raises_on_empty_vocabulary() -> None:
+    with pytest.raises(ValueError, match="empty vocabulary"):
+        build_tfidf_matrix(["a", "b", "c"])
