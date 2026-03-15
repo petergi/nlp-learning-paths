@@ -1,12 +1,12 @@
 import re
 
-import nltk
 from nltk.stem import PorterStemmer, WordNetLemmatizer
-
-nltk.download("wordnet", quiet=True)
 
 
 def main() -> None:
+    import nltk
+    nltk.download("wordnet", quiet=True)
+
     words = ["running", "better", "geese", "studies", "happily", "wolves"]
 
     stemmer = PorterStemmer()

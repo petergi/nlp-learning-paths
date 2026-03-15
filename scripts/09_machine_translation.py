@@ -6,7 +6,7 @@ def main() -> None:
         from transformers import pipeline
     except ImportError:
         print("Missing dependencies. Install with:")
-        print("  pip install transformers torch sentencepiece sacremoses")
+        print("  pip install transformers torch sentencepiece")
         return
 
     print("=== Machine Translation (EN -> FR) ===\n")

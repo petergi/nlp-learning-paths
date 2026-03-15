@@ -20,9 +20,12 @@ def build_bow_matrix(corpus: List[str]) -> Tuple[spmatrix, List[str]]:
 
     Raises:
         RuntimeError: If scikit-learn is not installed.
+        ValueError: If *corpus* is empty or contains only whitespace documents.
     """
     if CountVectorizer is None:
         raise RuntimeError("scikit-learn is required for build_bow_matrix")
+    if not corpus or not any(doc.strip() for doc in corpus):
+        raise ValueError("corpus must contain at least one non-empty document")
     vectorizer = CountVectorizer()
     matrix = vectorizer.fit_transform(corpus)
     return matrix, vectorizer.get_feature_names_out().tolist()
@@ -37,9 +40,12 @@ def build_tfidf_matrix(corpus: List[str]) -> Tuple[spmatrix, List[str]]:
 
     Raises:
         RuntimeError: If scikit-learn is not installed.
+        ValueError: If *corpus* is empty or contains only whitespace documents.
     """
     if TfidfVectorizer is None:
         raise RuntimeError("scikit-learn is required for build_tfidf_matrix")
+    if not corpus or not any(doc.strip() for doc in corpus):
+        raise ValueError("corpus must contain at least one non-empty document")
     vectorizer = TfidfVectorizer()
     matrix = vectorizer.fit_transform(corpus)
     return matrix, vectorizer.get_feature_names_out().tolist()

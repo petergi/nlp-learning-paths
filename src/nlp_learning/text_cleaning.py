@@ -35,11 +35,11 @@ def lemmatize_words(words: List[str]) -> List[str]:
     lemmatizer = WordNetLemmatizer()
     try:
         return [lemmatizer.lemmatize(w) for w in words]
-    except LookupError:
+    except LookupError as e:
         raise LookupError(
             "WordNet data not found. Download it with: "
             "python -m nltk.downloader wordnet omw-1.4"
-        )
+        ) from e
 
 
 def extract_patterns(text: str, pattern: str) -> List[str]:

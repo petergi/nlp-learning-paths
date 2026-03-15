@@ -29,6 +29,10 @@ def find_best_match(query: str, candidates: List[str]) -> Tuple[int, float]:
         raise RuntimeError("scikit-learn is required for find_best_match")
     if not candidates:
         raise ValueError("candidates must not be empty")
+    if not any(c.strip() for c in candidates):
+        raise ValueError("candidates must contain at least one non-empty string")
+    if not query.strip():
+        raise ValueError("query must not be empty or whitespace")
 
     vectorizer = TfidfVectorizer()
     candidate_vecs = vectorizer.fit_transform(candidates)

@@ -57,7 +57,7 @@ def main() -> None:
         "It was fine, nothing remarkable",
         "Average at best, not impressed",
     ]
-    train_labels: list[int] = [1, 1, 1, 1, 0, 0, 0, 0, 0, 1]  # 1=pos, 0=neg
+    train_labels: list[int] = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0]  # 1=pos, 0=neg
 
     vectorizer = TfidfVectorizer()
     x_train = vectorizer.fit_transform(train_texts)
