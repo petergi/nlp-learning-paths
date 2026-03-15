@@ -35,7 +35,13 @@ def find_best_match(query: str, candidates: List[str]) -> Tuple[int, float]:
         raise ValueError("query must not be empty or whitespace")
 
     vectorizer = TfidfVectorizer()
-    candidate_vecs = vectorizer.fit_transform(candidates)
+    try:
+        candidate_vecs = vectorizer.fit_transform(candidates)
+    except ValueError as e:
+        raise ValueError(
+            "candidates produced an empty vocabulary — they may "
+            "contain only stop-words or single-character tokens"
+        ) from e
     query_vec = vectorizer.transform([query])
 
     scores = cosine_similarity(query_vec, candidate_vecs).flatten()

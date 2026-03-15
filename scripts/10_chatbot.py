@@ -54,11 +54,7 @@ CONFIDENCE_THRESHOLD: float = 0.15
 
 
 def main() -> None:
-    try:
-        questions = [entry["question"] for entry in KNOWLEDGE_BASE]
-    except RuntimeError:
-        print("Missing dependency. Install with: pip install scikit-learn")
-        return
+    questions = [entry["question"] for entry in KNOWLEDGE_BASE]
 
     print("=== Retrieval-Based Chatbot ===")
     print("Type your question (or 'quit' to exit).\n")
