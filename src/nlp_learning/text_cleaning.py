@@ -43,10 +43,11 @@ def lemmatize_words(words: List[str]) -> List[str]:
 
 
 def extract_patterns(text: str, pattern: str) -> List[str]:
-    """Return all non-overlapping matches of *pattern* in *text*.
+    """Return all non-overlapping full matches of *pattern* in *text*.
 
-    This is a thin wrapper around ``re.findall`` that compiles the pattern
-    first so callers get a clear error on invalid regex.
+    Uses ``re.finditer`` so the return type is always ``List[str]``
+    (full match strings), regardless of whether *pattern* contains
+    capturing groups.
     """
     compiled = re.compile(pattern)
-    return compiled.findall(text)
+    return [m.group(0) for m in compiled.finditer(text)]
