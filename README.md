@@ -1,6 +1,8 @@
 # NLP with Python Learning Workspace
 
-A practical workspace to learn Natural Language Processing (NLP) in Python, with two complementary learning tracks: hands-on scripts for quick experimentation, and deep-dive Jupyter notebooks with full explanations and exercises.
+A structured learning workspace for Natural Language Processing (NLP) in Python, built for people who learn best by following a clear, progressive path through the material.
+
+The concepts and techniques covered here are drawn from various NLP textbooks and resources — what's original is the organization: everything has been distilled into two complementary learning tracks that build on each other chapter by chapter. A scripts track for quick, hands-on experimentation, and a notebooks track for deeper exploration with full explanations and exercises.
 
 ## Project Structure
 
