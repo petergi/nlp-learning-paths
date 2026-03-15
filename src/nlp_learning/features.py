@@ -2,6 +2,8 @@
 
 from typing import List, Tuple
 
+from scipy.sparse import spmatrix
+
 try:
     from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 except ImportError:  # pragma: no cover
@@ -9,7 +11,7 @@ except ImportError:  # pragma: no cover
     TfidfVectorizer = None
 
 
-def build_bow_matrix(corpus: List[str]) -> Tuple:
+def build_bow_matrix(corpus: List[str]) -> Tuple[spmatrix, List[str]]:
     """Build a Bag-of-Words matrix from a list of documents.
 
     Returns:
@@ -26,7 +28,7 @@ def build_bow_matrix(corpus: List[str]) -> Tuple:
     return matrix, vectorizer.get_feature_names_out().tolist()
 
 
-def build_tfidf_matrix(corpus: List[str]) -> Tuple:
+def build_tfidf_matrix(corpus: List[str]) -> Tuple[spmatrix, List[str]]:
     """Build a TF-IDF matrix from a list of documents.
 
     Returns:

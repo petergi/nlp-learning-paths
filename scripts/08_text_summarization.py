@@ -1,13 +1,14 @@
 """Extractive text summarization using NLTK word frequency scoring."""
 
-import nltk
-
-nltk.download("punkt", quiet=True)
-nltk.download("punkt_tab", quiet=True)
-nltk.download("stopwords", quiet=True)
-
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
+
+
+def _ensure_nltk_data() -> None:
+    """Download required NLTK resources if not already present."""
+    import nltk
+    for resource in ("punkt", "punkt_tab", "stopwords"):
+        nltk.download(resource, quiet=True)
 
 
 def score_sentences(text: str) -> dict[str, float]:
@@ -37,6 +38,8 @@ def summarize(text: str, num_sentences: int = 2) -> str:
 
 
 def main() -> None:
+    _ensure_nltk_data()
+
     text = (
         "Natural language processing enables computers to understand human language. "
         "It combines computational linguistics with machine learning and deep learning models. "

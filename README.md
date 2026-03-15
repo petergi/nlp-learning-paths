@@ -27,7 +27,10 @@ source .venv/bin/activate
 1. Install dependencies:
 
 ```bash
-pip install -e .[dev]
+pip install -e '.[dev]'
+
+# Optional: for scripts 09 (translation) and notebook deep learning sections
+pip install -e '.[dev,transformers]'
 ```
 
 1. Download required NLTK resources and spaCy model:

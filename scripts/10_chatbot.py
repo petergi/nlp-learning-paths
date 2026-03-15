@@ -1,5 +1,7 @@
 """Simple retrieval-based chatbot using TF-IDF and cosine similarity."""
 
+from nlp_learning.similarity import find_best_match
+
 KNOWLEDGE_BASE: list[dict[str, str]] = [
     {"question": "Hello, how are you?", "answer": "I'm doing great, thanks for asking!"},
     {"question": "What is your name?", "answer": "I'm a simple retrieval-based chatbot."},
@@ -14,25 +16,6 @@ KNOWLEDGE_BASE: list[dict[str, str]] = [
 ]
 
 CONFIDENCE_THRESHOLD: float = 0.15
-
-
-def find_best_match(user_input: str, questions: list[str]) -> tuple[int, float]:
-    """Return the index and similarity score of the best matching question."""
-    try:
-        from sklearn.feature_extraction.text import TfidfVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
-    except ImportError:
-        print("Missing dependency. Install with: pip install scikit-learn")
-        raise SystemExit(1)
-
-    corpus = questions + [user_input]
-    vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(corpus)
-
-    similarities = cosine_similarity(tfidf_matrix[-1:], tfidf_matrix[:-1]).flatten()
-    best_idx: int = int(similarities.argmax())
-    best_score: float = float(similarities[best_idx])
-    return best_idx, best_score
 
 
 def main() -> None:

@@ -31,11 +31,8 @@ def find_best_match(query: str, candidates: List[str]) -> Tuple[int, float]:
         raise ValueError("candidates must not be empty")
 
     vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(candidates + [query])
-
-    # The query vector is the last row; candidates are all preceding rows.
-    query_vec = tfidf_matrix[-1]
-    candidate_vecs = tfidf_matrix[:-1]
+    candidate_vecs = vectorizer.fit_transform(candidates)
+    query_vec = vectorizer.transform([query])
 
     scores = cosine_similarity(query_vec, candidate_vecs).flatten()
     best_index = int(scores.argmax())
