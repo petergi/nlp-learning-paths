@@ -7,6 +7,7 @@ The concepts and techniques covered here are drawn from various NLP textbooks an
 ## Project Structure
 
 ```text
+├── .vscode/              # VS Code workspace settings and extensions
 ├── scripts/              # Track 1: runnable scripts (one per chapter)
 ├── notebooks/            # Track 2: deep-dive Jupyter notebooks
 ├── src/nlp_learning/     # shared NLP utility modules
@@ -15,36 +16,95 @@ The concepts and techniques covered here are drawn from various NLP textbooks an
 └── pyproject.toml
 ```
 
-## Quick Start
+## Getting Started
 
-1. Create and activate a virtual environment:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-1. Install dependencies:
+**Prerequisites:** Python 3.10 – 3.13 (3.14 is not yet supported by spaCy). Verify with:
 
 ```bash
-pip install -e '.[dev]'
-
-# Optional: for scripts 09 (translation) and notebook deep learning sections
-pip install -e '.[dev,transformers]'
+python3 --version
 ```
 
-1. Download required NLTK resources and spaCy model:
+### Option A: Command Line
 
-```bash
-python -m nltk.downloader punkt punkt_tab stopwords wordnet vader_lexicon omw-1.4
-python -m spacy download en_core_web_sm
-```
+1. **Create and activate a virtual environment:**
 
-1. Run tests:
+   ```bash
+   # macOS / Linux
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
 
-```bash
-pytest
-```
+   ```powershell
+   # Windows (PowerShell)
+   py -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   pip install -e '.[dev]'
+   ```
+
+   For script 09 (machine translation) and notebook deep-learning sections, also install:
+
+   ```bash
+   pip install -e '.[dev,transformers]'
+   ```
+
+3. **Download NLP models and data:**
+
+   ```bash
+   python -m nltk.downloader punkt punkt_tab stopwords wordnet vader_lexicon omw-1.4
+   python -m spacy download en_core_web_sm
+   ```
+
+4. **Verify the setup:**
+
+   ```bash
+   pytest
+   python scripts/01_text_preprocessing.py
+   ```
+
+5. **Launch notebooks:**
+
+   ```bash
+   jupyter notebook
+   ```
+
+### Option B: VS Code
+
+The repository includes workspace settings (`.vscode/`) that configure the Python interpreter and recommended extensions automatically.
+
+1. **Open the project folder** in VS Code (`File > Open Folder...`).
+
+2. **Install recommended extensions** when prompted — or manually install:
+   - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+   - [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+   - [Ruff](https://marketplace.visualstudio.com/items?itemName=astral-sh.ruff)
+
+3. **Create the virtual environment.** Open the integrated terminal (<kbd>Ctrl</kbd>+<kbd>`</kbd>) and run:
+
+   ```bash
+   python3 -m venv .venv
+   ```
+
+   VS Code will detect the new environment and ask to select it as the interpreter — click **Yes**. If it doesn't, open the Command Palette (<kbd>Cmd</kbd>/<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) and run **Python: Select Interpreter**, then choose `.venv`.
+
+4. **Install dependencies** from the terminal (the venv activates automatically):
+
+   ```bash
+   pip install -e '.[dev]'
+   ```
+
+5. **Download NLP models and data:**
+
+   ```bash
+   python -m nltk.downloader punkt punkt_tab stopwords wordnet vader_lexicon omw-1.4
+   python -m spacy download en_core_web_sm
+   ```
+
+6. **Open any notebook** from the `notebooks/` folder. VS Code will use the `.venv` kernel automatically. If prompted to select a kernel, choose **Python Environments > .venv**.
 
 ## Track 1: Scripts
 

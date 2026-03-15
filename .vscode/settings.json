@@ -1,0 +1,8 @@
+{
+  "python.terminal.activateEnvironment": true,
+  "[python]": {
+    "editor.defaultFormatter": "astral-sh.ruff",
+    "editor.formatOnSave": true
+  },
+  "notebook.formatOnSave.enabled": true
+}
