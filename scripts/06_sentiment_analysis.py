@@ -28,7 +28,7 @@ def _load_training_data(path: Path) -> tuple[list[str], list[int]]:
                 continue
             try:
                 label = int(row["label"])
-            except (KeyError, ValueError) as exc:
+            except (KeyError, TypeError, ValueError) as exc:
                 raise ValueError(
                     f"{path} line {lineno}: invalid label {row.get('label')!r}"
                 ) from exc
@@ -83,9 +83,9 @@ def main() -> None:
 
     try:
         train_texts, train_labels = _load_training_data(DATA_PATH)
-    except OSError:
+    except OSError as exc:
         print(f"Training data not found: {DATA_PATH}")
-        print("Make sure you're running from the repo root.")
+        print(f"  {exc}")
         return
     except ValueError as exc:
         print(f"Bad training data: {exc}")

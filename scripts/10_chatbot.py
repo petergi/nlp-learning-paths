@@ -33,9 +33,9 @@ def _load_knowledge_base(path: Path) -> list[dict[str, str]]:
 def main() -> None:
     try:
         kb = _load_knowledge_base(DATA_PATH)
-    except OSError:
+    except OSError as exc:
         print(f"Knowledge base not found: {DATA_PATH}")
-        print("Make sure you're running from the repo root.")
+        print(f"  {exc}")
         return
     except ValueError as exc:
         print(f"Bad knowledge base: {exc}")

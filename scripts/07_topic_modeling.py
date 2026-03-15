@@ -92,9 +92,9 @@ def run_lda(corpus: list[str], n_topics: int = 3) -> None:
 def main() -> None:
     try:
         corpus = _load_corpus(DATA_PATH)
-    except OSError:
+    except OSError as exc:
         print(f"Corpus file not found: {DATA_PATH}")
-        print("Make sure you're running from the repo root.")
+        print(f"  {exc}")
         return
     except ValueError as exc:
         print(f"Bad corpus data: {exc}")
