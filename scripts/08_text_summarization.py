@@ -14,7 +14,10 @@ def _ensure_nltk_data() -> None:
 def score_sentences(text: str) -> dict[str, float]:
     """Score each sentence by normalized word frequency (excluding stopwords)."""
     stop_words = set(stopwords.words("english"))
-    words = [w.lower() for w in word_tokenize(text) if w.isalnum() and w.lower() not in stop_words]
+    words = [
+        w.lower() for w in word_tokenize(text)
+        if w.isalnum() and w.lower() not in stop_words
+    ]
 
     freq: dict[str, int] = {}
     for w in words:
