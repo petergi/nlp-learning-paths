@@ -11,7 +11,6 @@ The concepts and techniques covered here are drawn from various NLP textbooks an
 ├── notebooks/            # Track 2: deep-dive Jupyter notebooks
 ├── src/nlp_learning/     # shared NLP utility modules
 ├── tests/                # unit tests for utility modules
-├── data/                 # sample datasets
 └── pyproject.toml
 ```
 
