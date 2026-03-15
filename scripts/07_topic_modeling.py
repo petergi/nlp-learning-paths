@@ -9,9 +9,22 @@ DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "topic_corpus.csv"
 
 
 def _load_corpus(path: Path) -> list[str]:
-    """Load documents from a single-column CSV with a ``text`` header."""
+    """Load documents from a single-column CSV with a ``text`` header.
+
+    Skips rows with missing or blank ``text`` fields.
+    """
+    docs: list[str] = []
     with open(path, newline="", encoding="utf-8") as f:
-        return [row["text"] for row in csv.DictReader(f)]
+        reader = csv.DictReader(f)
+        if reader.fieldnames is None or "text" not in reader.fieldnames:
+            raise ValueError(f"{path}: missing required 'text' column")
+        for row in reader:
+            text = (row.get("text") or "").strip()
+            if text:
+                docs.append(text)
+    if not docs:
+        raise ValueError(f"{path}: no valid documents found")
+    return docs
 
 
 def run_lsa(corpus: list[str], n_topics: int = 3) -> None:
@@ -77,7 +90,15 @@ def run_lda(corpus: list[str], n_topics: int = 3) -> None:
 
 
 def main() -> None:
-    corpus = _load_corpus(DATA_PATH)
+    try:
+        corpus = _load_corpus(DATA_PATH)
+    except OSError:
+        print(f"Corpus file not found: {DATA_PATH}")
+        print("Make sure you're running from the repo root.")
+        return
+    except ValueError as exc:
+        print(f"Bad corpus data: {exc}")
+        return
 
     print("Corpus:")
     for i, doc in enumerate(corpus, 1):
