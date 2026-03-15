@@ -2,6 +2,6 @@
   "recommendations": [
     "ms-python.python",
     "ms-toolsai.jupyter",
-    "charliermarsh.ruff"
+    "astral-sh.ruff"
   ]
 }

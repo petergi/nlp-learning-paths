@@ -29,9 +29,15 @@ python3 --version
 1. **Create and activate a virtual environment:**
 
    ```bash
+   # macOS / Linux
    python3 -m venv .venv
-   source .venv/bin/activate   # macOS / Linux
-   .venv\Scripts\activate      # Windows
+   source .venv/bin/activate
+   ```
+
+   ```powershell
+   # Windows (PowerShell)
+   py -m venv .venv
+   .venv\Scripts\Activate.ps1
    ```
 
 2. **Install dependencies:**
@@ -75,7 +81,7 @@ The repository includes workspace settings (`.vscode/`) that configure the Pytho
 2. **Install recommended extensions** when prompted — or manually install:
    - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
    - [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
-   - [Ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+   - [Ruff](https://marketplace.visualstudio.com/items?itemName=astral-sh.ruff)
 
 3. **Create the virtual environment.** Open the integrated terminal (<kbd>Ctrl</kbd>+<kbd>`</kbd>) and run:
 
