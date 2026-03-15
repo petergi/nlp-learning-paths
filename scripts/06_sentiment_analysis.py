@@ -2,6 +2,46 @@
 
 from __future__ import annotations
 
+import csv
+from pathlib import Path
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "sentiment_reviews.csv"
+
+
+def _load_training_data(path: Path) -> tuple[list[str], list[int]]:
+    """Load labeled reviews from a CSV with ``text`` and ``label`` columns.
+
+    Skips rows with missing or blank ``text`` fields.  Raises
+    ``ValueError`` on rows where ``label`` is not an integer.
+    """
+    texts: list[str] = []
+    labels: list[int] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        if reader.fieldnames is None or "text" not in reader.fieldnames:
+            raise ValueError(f"{path}: missing required 'text' column")
+        if "label" not in reader.fieldnames:
+            raise ValueError(f"{path}: missing required 'label' column")
+        for lineno, row in enumerate(reader, start=2):
+            text = (row.get("text") or "").strip()
+            if not text:
+                continue
+            try:
+                label = int(row["label"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"{path} line {lineno}: invalid label {row.get('label')!r}"
+                ) from exc
+            if label not in (0, 1):
+                raise ValueError(
+                    f"{path} line {lineno}: label must be 0 or 1, got {label}"
+                )
+            texts.append(text)
+            labels.append(label)
+    if not texts:
+        raise ValueError(f"{path}: no valid training rows found")
+    return texts, labels
+
 
 def main() -> None:
     test_sentences: list[str] = [
@@ -45,19 +85,15 @@ def main() -> None:
         print("scikit-learn not installed. Run: pip install scikit-learn")
         return
 
-    train_texts: list[str] = [
-        "I love this, it is great",
-        "Fantastic experience, highly recommend",
-        "Best thing ever, so happy",
-        "Really enjoyed it, wonderful time",
-        "This is awful and terrible",
-        "Horrible experience, very disappointing",
-        "Worst thing I have ever seen",
-        "I hate this, completely useless",
-        "It was fine, nothing remarkable",
-        "Average at best, not impressed",
-    ]
-    train_labels: list[int] = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0]  # 1=pos, 0=neg
+    try:
+        train_texts, train_labels = _load_training_data(DATA_PATH)
+    except OSError as exc:
+        print(f"Training data not found: {DATA_PATH}")
+        print(f"  {exc}")
+        return
+    except ValueError as exc:
+        print(f"Bad training data: {exc}")
+        return
 
     vectorizer = TfidfVectorizer()
     x_train = vectorizer.fit_transform(train_texts)
