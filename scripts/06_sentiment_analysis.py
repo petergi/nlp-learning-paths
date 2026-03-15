@@ -2,6 +2,22 @@
 
 from __future__ import annotations
 
+import csv
+from pathlib import Path
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "sentiment_reviews.csv"
+
+
+def _load_training_data(path: Path) -> tuple[list[str], list[int]]:
+    """Load labeled reviews from a CSV with ``text`` and ``label`` columns."""
+    texts: list[str] = []
+    labels: list[int] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            texts.append(row["text"])
+            labels.append(int(row["label"]))
+    return texts, labels
+
 
 def main() -> None:
     test_sentences: list[str] = [
@@ -45,19 +61,7 @@ def main() -> None:
         print("scikit-learn not installed. Run: pip install scikit-learn")
         return
 
-    train_texts: list[str] = [
-        "I love this, it is great",
-        "Fantastic experience, highly recommend",
-        "Best thing ever, so happy",
-        "Really enjoyed it, wonderful time",
-        "This is awful and terrible",
-        "Horrible experience, very disappointing",
-        "Worst thing I have ever seen",
-        "I hate this, completely useless",
-        "It was fine, nothing remarkable",
-        "Average at best, not impressed",
-    ]
-    train_labels: list[int] = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0]  # 1=pos, 0=neg
+    train_texts, train_labels = _load_training_data(DATA_PATH)
 
     vectorizer = TfidfVectorizer()
     x_train = vectorizer.fit_transform(train_texts)

@@ -2,18 +2,16 @@
 
 from __future__ import annotations
 
-CORPUS: list[str] = [
-    "Machine learning algorithms process large datasets efficiently.",
-    "Neural networks power modern artificial intelligence systems.",
-    "Python is a popular programming language for data science.",
-    "Chop the onions and garlic before heating the olive oil.",
-    "Bake the cake at 350 degrees for thirty minutes.",
-    "Season the chicken with salt, pepper, and fresh herbs.",
-    "The quarterback threw a perfect pass for the touchdown.",
-    "The team won the championship game in overtime.",
-    "Soccer players train daily to improve speed and endurance.",
-    "Cloud computing enables scalable software deployment worldwide.",
-]
+import csv
+from pathlib import Path
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "topic_corpus.csv"
+
+
+def _load_corpus(path: Path) -> list[str]:
+    """Load documents from a single-column CSV with a ``text`` header."""
+    with open(path, newline="", encoding="utf-8") as f:
+        return [row["text"] for row in csv.DictReader(f)]
 
 
 def run_lsa(corpus: list[str], n_topics: int = 3) -> None:
@@ -79,13 +77,15 @@ def run_lda(corpus: list[str], n_topics: int = 3) -> None:
 
 
 def main() -> None:
+    corpus = _load_corpus(DATA_PATH)
+
     print("Corpus:")
-    for i, doc in enumerate(CORPUS, 1):
+    for i, doc in enumerate(corpus, 1):
         print(f"  {i:>2}. {doc}")
     print()
 
-    run_lsa(CORPUS)
-    run_lda(CORPUS)
+    run_lsa(corpus)
+    run_lda(corpus)
 
     print("\nNote: Topics are unlabeled — inspect top words to infer themes.")
     print("Expected themes: technology, cooking, sports.")

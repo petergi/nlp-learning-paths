@@ -1,60 +1,24 @@
 """Simple retrieval-based chatbot using TF-IDF and cosine similarity."""
 
+import csv
+from pathlib import Path
+
 from nlp_learning.similarity import find_best_match
 
-KNOWLEDGE_BASE: list[dict[str, str]] = [
-    {
-        "question": "Hello, how are you?",
-        "answer": "I'm doing great, thanks for asking!",
-    },
-    {
-        "question": "What is your name?",
-        "answer": "I'm a simple retrieval-based chatbot.",
-    },
-    {
-        "question": "What is the weather like today?",
-        "answer": "I don't have live data, but I hope it's sunny!",
-    },
-    {
-        "question": "What is natural language processing?",
-        "answer": "NLP is a field of AI focused on the interaction "
-        "between computers and human language.",
-    },
-    {
-        "question": "What is machine learning?",
-        "answer": "Machine learning is a subset of AI where systems "
-        "learn patterns from data without explicit programming.",
-    },
-    {
-        "question": "What is Python used for?",
-        "answer": "Python is used for web dev, data science, ML, "
-        "automation, and much more.",
-    },
-    {
-        "question": "How do I install Python packages?",
-        "answer": "Use pip: run 'pip install package_name' in your terminal.",
-    },
-    {
-        "question": "What are transformers in NLP?",
-        "answer": "Transformers are deep learning models that use "
-        "self-attention, powering models like BERT and GPT.",
-    },
-    {
-        "question": "Tell me a fun fact",
-        "answer": "The word 'set' has the most definitions of any "
-        "English word -- over 430!",
-    },
-    {
-        "question": "Goodbye",
-        "answer": "Goodbye! Have a great day!",
-    },
-]
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "chatbot_kb.csv"
 
 CONFIDENCE_THRESHOLD: float = 0.15
 
 
+def _load_knowledge_base(path: Path) -> list[dict[str, str]]:
+    """Load Q&A pairs from a CSV with ``question`` and ``answer`` columns."""
+    with open(path, newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
 def main() -> None:
-    questions = [entry["question"] for entry in KNOWLEDGE_BASE]
+    kb = _load_knowledge_base(DATA_PATH)
+    questions = [entry["question"] for entry in kb]
 
     print("=== Retrieval-Based Chatbot ===")
     print("Type your question (or 'quit' to exit).\n")
@@ -79,8 +43,8 @@ def main() -> None:
                 f"(confidence: {score:.2f})\n"
             )
         else:
-            matched_q = KNOWLEDGE_BASE[idx]["question"]
-            answer = KNOWLEDGE_BASE[idx]["answer"]
+            matched_q = kb[idx]["question"]
+            answer = kb[idx]["answer"]
             print(f"Bot: {answer}")
             print(
                 f"     [matched: \"{matched_q}\" "

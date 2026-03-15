@@ -1,0 +1,11 @@
+question,answer
+"Hello, how are you?","I'm doing great, thanks for asking!"
+"What is your name?","I'm a simple retrieval-based chatbot."
+"What is the weather like today?","I don't have live data, but I hope it's sunny!"
+"What is natural language processing?","NLP is a field of AI focused on the interaction between computers and human language."
+"What is machine learning?","Machine learning is a subset of AI where systems learn patterns from data without explicit programming."
+"What is Python used for?","Python is used for web dev, data science, ML, automation, and much more."
+"How do I install Python packages?","Use pip: run 'pip install package_name' in your terminal."
+"What are transformers in NLP?","Transformers are deep learning models that use self-attention, powering models like BERT and GPT."
+"Tell me a fun fact","The word 'set' has the most definitions of any English word -- over 430!"
+"Goodbye","Goodbye! Have a great day!"
