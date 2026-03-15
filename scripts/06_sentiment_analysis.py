@@ -32,6 +32,10 @@ def _load_training_data(path: Path) -> tuple[list[str], list[int]]:
                 raise ValueError(
                     f"{path} line {lineno}: invalid label {row.get('label')!r}"
                 ) from exc
+            if label not in (0, 1):
+                raise ValueError(
+                    f"{path} line {lineno}: label must be 0 or 1, got {label}"
+                )
             texts.append(text)
             labels.append(label)
     if not texts:
